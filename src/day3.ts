@@ -26,10 +26,29 @@ const part1 = () => {
 
 const part2 = () => {
   let sum = 0;
-  for (const bank of data) {
-    const batteries = bank.split('').map(Number);
+  for (const batteries of data) {
+    const digits = 12;
+    let idx = 0;
+    let result = '';
+
+    for (let i = 0; i < digits; i++) {
+      const maxIndex = batteries.length - (digits - (i + 1)) - 1;
+
+      let bestDigit = '-1';
+      let bestIndex = idx;
+
+      for (let j = idx; j <= maxIndex; j++) {
+        if (Number(batteries[j]) > Number(bestDigit)) {
+          bestDigit = batteries[j];
+          bestIndex = j;
+        }
+      }
+
+      result += bestDigit;
+      idx = bestIndex + 1;
+    }
+
+    sum += Number(result);
   }
   console.log(sum);
 };
-
-part2();
